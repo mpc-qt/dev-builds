@@ -1,7 +1,7 @@
 name: Release maker
 
 on:
-  push:
+  workflow_dispatch
 
 jobs:
   release:
