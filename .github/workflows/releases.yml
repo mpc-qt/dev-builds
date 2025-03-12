@@ -18,7 +18,7 @@ jobs:
     - name: Download artifacts
       run: |
         # Download AppImage and Flatpak
-        run_id=$(gh run list --repo mpc-qt/mpc-qt --workflow "C/C++ CI" --branch master --limit 1 --json databaseId | jq -r '.[0].databaseId')
+        run_id=$(gh run list --repo mpc-qt/mpc-qt --workflow "C/C++ CI" --branch "dev-builds" --limit 1 --json databaseId | jq -r '.[0].databaseId')
         if [[ -n "$run_id" ]]; then
             echo "Downloading artifacts for run ID: $run_id"
             echo "Downloading AppImage..."
@@ -31,7 +31,7 @@ jobs:
         fi
 
         # Download Windows build
-        run_id=$(gh run list --repo mpc-qt/mpc-qt --workflow "Msys2 CI" --branch master --limit 1 --json databaseId | jq -r '.[0].databaseId')
+        run_id=$(gh run list --repo mpc-qt/mpc-qt --workflow "Msys2 CI" --branch "dev-builds" --limit 1 --json databaseId | jq -r '.[0].databaseId')
         if [[ -n "$run_id" ]]; then
             echo "Downloading Windows build artifact for run ID: $run_id"
             echo "Downloading..."
