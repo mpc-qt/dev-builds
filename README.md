@@ -1,6 +1,7 @@
 ## Latest development builds ## 
 ### Windows ###
-* [mpc-qt-continuous-win-x86_64.zip](https://github.com/mpc-qt/dev-builds/releases/download/continuous/mpc-qt-continuous-win-x86_64.zip)
+* Installer: [mpc-qt-continuous-win-x86_64-installer.exe](https://github.com/mpc-qt/dev-builds/releases/download/continuous/mpc-qt-continuous-win-x86_64-installer.exe)
+* Portable: [mpc-qt-continuous-win-x86_64.zip](https://github.com/mpc-qt/dev-builds/releases/download/continuous/mpc-qt-continuous-win-x86_64.zip)
 
 ### Linux ###
 * AppImage: [mpc-qt-continuous-linux-x86_64.AppImage](https://github.com/mpc-qt/dev-builds/releases/download/continuous/mpc-qt-continuous-linux-x86_64.AppImage)
