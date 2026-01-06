@@ -43,7 +43,7 @@ jobs:
         if [[ -n "$run_id" ]]; then
             echo "Downloading Windows build artifacts for run ID: $run_id"
             echo "Downloading portable..."
-            gh run download "$run_id" --repo mpc-qt/mpc-qt --name "mpc-qt-win"
+            gh run download "$run_id" --repo mpc-qt/mpc-qt --name "mpc-qt-win-x64-continuous"
             echo "Download complete!"
             7z a "mpc-qt-win-x64-continuous.zip" "./mpc-qt-win*"
             echo "Downloading installer..."
