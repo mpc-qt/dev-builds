@@ -22,9 +22,9 @@ jobs:
         if [[ -n "$run_id" ]]; then
             echo "Downloading artifacts for run ID: $run_id"
             echo "Downloading Linux build..."
-            gh run download "$run_id" --repo mpc-qt/mpc-qt --name "mpc-qt-x86_64"
+            gh run download "$run_id" --repo mpc-qt/mpc-qt --name "mpc-qt-linux-x64-continuous"
             echo "Downloading debug symbols..."
-            gh run download "$run_id" --repo mpc-qt/mpc-qt --name "mpc-qt-x86_64-debug_symbols"
+            gh run download "$run_id" --repo mpc-qt/mpc-qt --name "mpc-qt-linux-x64-debug_symbols-continuous"
             echo "Downloading AppImage..."
             gh run download "$run_id" --repo mpc-qt/mpc-qt --name "mpc-qt-x86_64-AppImage"
             # echo "Downloading AppImage zsync..."
@@ -33,7 +33,7 @@ jobs:
             gh run download "$run_id" --repo mpc-qt/mpc-qt --name "mpc-qt-x86_64-Flatpak"
             echo "Download complete!"
             7z a "mpc-qt-linux-x64-continuous.zip" "mpc-qt"
-            7z a "mpc-qt-linux-x64-continuous_symbols.zip" "mpc-qt.dbg"
+            7z a "mpc-qt-linux-x64-debug_symbols-continuous.zip" "mpc-qt.dbg"
         else
             echo "No recent runs found for 'C/C++ CI'."
         fi
@@ -62,6 +62,6 @@ jobs:
             mpc-qt-linux-x64-continuous.AppImage \
             mpc-qt-linux-x64-continuous.flatpak \
             mpc-qt-linux-x64-continuous.zip \
-            mpc-qt-linux-x64-continuous_symbols.zip \
+            mpc-qt-linux-x64-debug_symbols-continuous.zip \
             mpc-qt-win-x64-continuous.zip \
             mpc-qt-win-x64-continuous-installer.exe
