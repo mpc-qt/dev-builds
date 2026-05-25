@@ -32,13 +32,14 @@ jobs:
             echo "Downloading Flatpak..."
             gh run download "$run_id" --repo mpc-qt/mpc-qt --name "mpc-qt-x86_64-Flatpak"
             echo "Download complete!"
+            mv mpc-qt-linux-x64-*.flatpak mpc-qt-linux-x64-continuous.flatpak
             7z a "mpc-qt-linux-x64-continuous.zip" "mpc-qt"
             7z a "mpc-qt-linux-x64-debug_symbols-continuous.zip" "mpc-qt.dbg"
         else
             echo "No recent runs found for 'C/C++ CI'."
         fi
 
-        # Download Windows build
+        # Download Windows portable and installer builds
         run_id=$(gh run list --repo mpc-qt/mpc-qt --workflow "Msys2 CI" --branch master -s "success" --limit 1 --json databaseId | jq -r '.[0].databaseId')
         if [[ -n "$run_id" ]]; then
             echo "Downloading Windows build artifacts for run ID: $run_id"
