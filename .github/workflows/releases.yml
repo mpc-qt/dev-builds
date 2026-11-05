@@ -21,17 +21,25 @@ jobs:
         run_id=$(gh run list --repo mpc-qt/mpc-qt --workflow "C/C++ CI" --branch master -s "success" --limit 1 --json databaseId | jq -r '.[0].databaseId')
         if [[ -n "$run_id" ]]; then
             echo "Downloading artifacts for run ID: $run_id"
+
             echo "Downloading Linux build..."
             gh run download "$run_id" --repo mpc-qt/mpc-qt --name "mpc-qt-linux-x64-continuous"
+
             echo "Downloading debug symbols..."
             gh run download "$run_id" --repo mpc-qt/mpc-qt --name "mpc-qt-linux-x64-debug_symbols-continuous"
+
             echo "Downloading AppImage..."
             gh run download "$run_id" --repo mpc-qt/mpc-qt --name "mpc-qt-x86_64-AppImage"
+
             # echo "Downloading AppImage zsync..."
             # gh run download "$run_id" --repo mpc-qt/mpc-qt --name "mpc-qt-x86_64-AppImage.zsync"
+
             echo "Downloading Flatpak..."
             gh run download "$run_id" --repo mpc-qt/mpc-qt --name "mpc-qt-x86_64-Flatpak"
+
             echo "Download complete!"
+
+            echo "Renaming and compressing artifacts..."
             mv mpc-qt-linux-x64-*.flatpak mpc-qt-linux-x64-continuous.flatpak
             7z a "mpc-qt-linux-x64-continuous.zip" "mpc-qt"
             7z a "mpc-qt-linux-x64-debug_symbols-continuous.zip" "mpc-qt.dbg"
@@ -43,16 +51,29 @@ jobs:
         run_id=$(gh run list --repo mpc-qt/mpc-qt --workflow "Msys2 CI" --branch master -s "success" --limit 1 --json databaseId | jq -r '.[0].databaseId')
         if [[ -n "$run_id" ]]; then
             echo "Downloading Windows build artifacts for run ID: $run_id"
+
             echo "Downloading portable..."
             gh run download "$run_id" --repo mpc-qt/mpc-qt --name "mpc-qt-win-x64-continuous"
             echo "Download complete!"
             7z a "mpc-qt-win-x64-continuous.zip" "./mpc-qt-win*"
+
             echo "Downloading installer..."
             gh run download "$run_id" --repo mpc-qt/mpc-qt --name "mpc-qt-win-installer"
             echo "Download complete!"
         else
             echo "No recent runs found for 'Msys2 CI'."
         fi
+
+        # Download macOS build
+        run_id=$(gh run list --repo mpc-qt/mpc-qt --workflow "macOS CI" --branch master -s "success" --limit 1 --json databaseId | jq -r '.[0].databaseId')
+        if [[ -n "$run_id" ]]; then
+            echo "Downloading macOS build artifact for run ID: $run_id"
+            gh run download "$run_id" --repo mpc-qt/mpc-qt --name "mpc-qt-macos-arm64-continuous"
+            mv mpc-qt-macos-arm64.zip mpc-qt-macos-arm64-continuous.zip
+        else
+            echo "No recent runs found for 'macOS CI'."
+        fi
+
     - name: Create release and upload artifacts
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -65,4 +86,5 @@ jobs:
             mpc-qt-linux-x64-continuous.zip \
             mpc-qt-linux-x64-debug_symbols-continuous.zip \
             mpc-qt-win-x64-continuous.zip \
-            mpc-qt-win-x64-continuous-installer.exe
+            mpc-qt-win-x64-continuous-installer.exe \
+            mpc-qt-macos-arm64-continuous.zip
